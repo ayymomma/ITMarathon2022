@@ -15,7 +15,7 @@ public class DeviceSession {
     private Integer sessionId;
 
     @Column(name = "DEVICE_ID", nullable = false)
-    private Integer deviceId;
+    private String deviceId;
 
     @Column(name = "TIMESTAMP", nullable = false)
     private Timestamp timestamp;

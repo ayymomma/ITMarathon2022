@@ -9,9 +9,8 @@ import javax.persistence.*;
 @Table(name = "DEVICES")
 public class Device {
     @Id
-    @GeneratedValue
     @Column(name = "DEVICE_ID", nullable = false)
-    private Integer deviceId;
+    private String deviceId;
 
     @Column(name = "DEVICE_NAME", nullable = false)
     private String deviceName;
