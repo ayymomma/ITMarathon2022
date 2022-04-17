@@ -67,4 +67,4 @@ class ApplicationItem(QFrame):
 
     def setVersion(self, version):
         for vers in version:
-            self.versionComboBox.addItem(version)
+            self.versionComboBox.addItem(vers['versionName'])

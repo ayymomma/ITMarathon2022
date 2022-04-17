@@ -41,11 +41,8 @@ class AdminFrame(QFrame):
         super(AdminFrame, self).show()
         apps = self.server.getApplications()
         print(apps)
-        # for i in range(0, len(apps)):
-        #     print(apps[i])
-        #     print(versions[i])
-        #     application = ApplicationItem()
-        #     application.setName(apps[i]['appName'])
-        #     application.setVersion(versions[i])
-        #     self.applicationFrame.addItem(application)
-
+        for app in apps:
+            applicationItem = ApplicationItem()
+            applicationItem.setName(app["appName"])
+            applicationItem.setVersion(app["versions"])
+            self.applicationFrame.addItem(applicationItem)
