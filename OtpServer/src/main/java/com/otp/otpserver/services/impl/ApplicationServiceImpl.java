@@ -56,9 +56,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setAppId(null);
 
         // se cauta sa nu fie acelasi nume si prenume
-        Application otherApp = (Application) applicationRepository.findByAppName(application.getAppName());
+        List<Application> otherApp = applicationRepository.findByAppName(application.getAppName());
 
-        if (otherApp != null)
+        if (!otherApp.isEmpty())
             throw new HttpResponseException("An application with same name exists.", HttpStatus.CONFLICT);
 
         // Se adauga autor
@@ -67,6 +67,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Application updateApplication(Integer appId, Application application) {
+        application.setAppId(null);
+
         Optional<Application> otherApplicationOptional = applicationRepository.findById(appId);
 
         if (otherApplicationOptional.isEmpty())

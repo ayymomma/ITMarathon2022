@@ -86,10 +86,10 @@ public class ApplicationController {
     @PutMapping(path = "{ID}")
     public @ResponseBody
     ResponseEntity<?> updateApplication(@PathVariable(name = "ID") Integer appId,
-            @RequestBody ApplicationNoId application
+            @RequestBody Application application
     ) {
         try {
-            Application updatedApp = applicationService.updateApplication(appId, application.toApplicationErd());
+            Application updatedApp = applicationService.updateApplication(appId, application);
 
             return ok().body(updatedApp);
 
