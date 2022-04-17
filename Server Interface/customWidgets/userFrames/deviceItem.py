@@ -18,7 +18,7 @@ QLabel {
 
 
 class DeviceItem(QPushButton):
-    add_apps_signal = pyqtSignal()
+    add_apps_signal = pyqtSignal(list)
 
     def __init__(self, parent=None):
         super(DeviceItem, self).__init__(parent)
@@ -58,5 +58,5 @@ class DeviceItem(QPushButton):
         super(DeviceItem, self).mouseReleaseEvent(e)
         apps = self.server.getApplicationsForDevice(self.deviceID)
         print(apps)
-        # self.add_apps_signal.emit()
+        self.add_apps_signal.emit(apps)
 

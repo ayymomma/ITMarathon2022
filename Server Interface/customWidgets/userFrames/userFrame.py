@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QFrame, QLabel, QPushButton
 
 from customWidgets.buttons.customButton import CustomButton
+from customWidgets.userFrames.applicationItem import ApplicationItem
 from customWidgets.userFrames.applicationsFrame import ApplicationsFrame
 from customWidgets.userFrames.deviceItem import DeviceItem
 from customWidgets.userFrames.devicesFrame import DevicesFrame
@@ -76,14 +77,17 @@ class UserFrame(QFrame):
         for device in deviceList:
             print(device)
             dev = DeviceItem()
-            # dev.add_apps_signal.connect(self.addApps)
+            dev.add_apps_signal.connect(self.addApps)
             dev.setName(device['deviceName'])
             dev.setDeviceId(device['deviceId'])
             self.devicesFrame.addDevice(dev)
 
-    # def addApps(self, apps):
-    #     for app in apps:
-    #         self.applicationsFrame.addItem(app)
+    def addApps(self, apps):
+        for app in apps:
+            item = ApplicationItem()
+            print(app)
+            item.updateData(app['appName'], app['versionName'])
+            self.applicationsFrame.addItem(item)
 
 
 

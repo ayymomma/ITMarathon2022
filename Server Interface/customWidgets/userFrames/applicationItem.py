@@ -1,8 +1,10 @@
+from PyQt5 import QtCore
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QFrame, QSizePolicy, QComboBox, QLabel, QPushButton
 
 from customWidgets.buttons.customButton import CustomButton
+from webAPI.serverApi import ServerAPI
 
 style = """
 QFrame {
@@ -25,6 +27,7 @@ class ApplicationItem(QFrame):
         self.applicationName = QLabel(self)
         self.updateLabel = QLabel(self)
         self.updateButton = CustomButton(self, "update", 103, 123, 28, bgColor="#5AE343", bdColor="#5AE343", color="#000000", textWeight=10, bold=False)
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -39,9 +42,7 @@ class ApplicationItem(QFrame):
 
         # combobox
         self.versionComboBox.setGeometry(11, 15, 159, 33)
-        self.versionComboBox.addItem("1.2.0")
-        self.versionComboBox.addItem("1.3.0")
-        self.versionComboBox.addItem("1.4.0")
+
 
         # vertical line
         self.verticalLine.setGeometry(208, 5, 1, 55)
@@ -69,3 +70,11 @@ class ApplicationItem(QFrame):
         # update button
         self.updateButton.setGeometry(777, 26, 103, 28)
         self.updateButton.setIcon(QIcon('customWidgets/icons/Upload.png'))
+
+    def updateData(self, name, version):
+        app = self.server.getApplicationInfo(name)
+        for ap in app:
+            for version in ap['versions']:
+                self.versionComboBox.addItem(version['versionName'])
+        self.applicationName.setText(name)
+        self.versionComboBox.setCurrentIndex(0)
