@@ -40,3 +40,7 @@ class ScrollAreaApplications(QScrollArea):
         self.verticalLayout.addWidget(widget)
         self.verticalLayout.addItem(self.spacerItem)
 
+    def clearItems(self):
+        for i in reversed(range(self.verticalLayout.count())):
+            self.verticalLayout.itemAt(i).widget().setParent(None)
+

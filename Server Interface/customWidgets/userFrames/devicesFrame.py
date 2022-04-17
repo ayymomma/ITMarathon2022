@@ -19,7 +19,7 @@ class DevicesFrame(QFrame):
         super(DevicesFrame, self).__init__(parent)
         self.deviceTitle = QLabel(self)
         self.scrollAreaDevices = ScrollAreaDevices(self)
-
+        self.deviceList = []
         self.initUI()
 
     def initUI(self):
@@ -35,7 +35,5 @@ class DevicesFrame(QFrame):
         self.deviceTitle.setGeometry(64, 15, 200, 30)
         self.deviceTitle.setAlignment(Qt.AlignCenter)
 
-        self.scrollAreaDevices.addWidget(DeviceItem())
-        self.scrollAreaDevices.addWidget(DeviceItem())
-        self.scrollAreaDevices.addWidget(DeviceItem())
-        self.scrollAreaDevices.addWidget(DeviceItem())
+    def addDevice(self, device):
+        self.scrollAreaDevices.addDevice(device)

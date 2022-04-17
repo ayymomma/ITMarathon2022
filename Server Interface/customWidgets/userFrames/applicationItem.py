@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QFrame, QSizePolicy, QComboBox, QLabel, QPushButton
 
 from customWidgets.buttons.customButton import CustomButton
@@ -68,3 +68,4 @@ class ApplicationItem(QFrame):
 
         # update button
         self.updateButton.setGeometry(777, 26, 103, 28)
+        self.updateButton.setIcon(QIcon('customWidgets/icons/Upload.png'))

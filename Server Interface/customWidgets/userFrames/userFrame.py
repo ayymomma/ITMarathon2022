@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QFrame, QLabel, QPushButton
 
 from customWidgets.buttons.customButton import CustomButton
 from customWidgets.userFrames.applicationsFrame import ApplicationsFrame
+from customWidgets.userFrames.deviceItem import DeviceItem
 from customWidgets.userFrames.devicesFrame import DevicesFrame
 
 style = """
@@ -43,7 +44,7 @@ class UserFrame(QFrame):
                                            "color: black;"
                                            "border-radius: 20px;"
                                            "style: flat;")
-        self.addDeviceButton.setIcon(QIcon('customWidgets/icons/plus.png'))
+        self.addDeviceButton.setIcon(QIcon('customWidgets/icons/Plus.png'))
         self.addDeviceButton.setIconSize(QSize(30, 30))
         font.setBold(False)
         font.setWeight(10)

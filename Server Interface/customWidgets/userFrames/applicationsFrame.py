@@ -17,6 +17,7 @@ class ApplicationsFrame(QFrame):
         super(ApplicationsFrame, self).__init__(parent)
         self.applicationTitle = QLabel(self)
         self.scrollAreaApplications = ScrollAreaApplications(self)
+        self.itemList = []
         self.initUI()
 
     def initUI(self):
@@ -31,7 +32,14 @@ class ApplicationsFrame(QFrame):
         self.applicationTitle.setText("Applications")
         self.applicationTitle.setGeometry(21, 15, 225, 30)
 
-        self.scrollAreaApplications.addWidget(ApplicationItem())
-        self.scrollAreaApplications.addWidget(ApplicationItem())
-        self.scrollAreaApplications.addWidget(ApplicationItem())
-        self.scrollAreaApplications.addWidget(ApplicationItem())
+    def addItem(self, item):
+        self.itemList.append(item)
+        self.scrollAreaApplications.addItem(item)
+
+    def removeItem(self, item):
+        self.itemList.remove(item)
+        self.scrollAreaApplications.removeItem(item)
+
+    def clearItems(self):
+        self.itemList.clear()
+        self.scrollAreaApplications.clearItems()
