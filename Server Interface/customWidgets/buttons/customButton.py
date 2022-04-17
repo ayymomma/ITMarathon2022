@@ -3,40 +3,41 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton
 
 style = """
-QPushButton {
-    background-color: rgba(85, 47, 208, 255);
-    color: #FFFFFF;
+QPushButton {{
+    background-color: {bgColor};
+    color: {color};
     font-size: 18px;
-    border-radius: 15px;
+    border-radius: 12px;
     border: 2px solid;
-    border-color: rgba(162, 85, 232, 255);
-}
-QPushButton:pressed {
-    background-color: rgba(85, 47, 208, 255);
-}
+    border-color: {bdColor};
+}}
+QPushButton:pressed {{
+    background-color: {bgColor};
+}}
 """
 
 
 class CustomButton(QPushButton):
 
-    def __init__(self, parent, text, minimumXSize, maximumXSize, ySize):
+    def __init__(self, parent, text, minimumXSize, maximumXSize, ySize, bgColor="rgba(85, 47, 208, 255)", bdColor="rgba(162, 85, 232, 255)", color="rgba(255, 255, 255, 255)", textWeight=30, bold=True):
         super(CustomButton, self).__init__(parent)
         self.text = text
         self.minXSize = minimumXSize
         self.maxXSize = maximumXSize
         self.ySize = ySize
-        self.setupUi()
+        self.setStyleSheet(style.format(bgColor=bgColor, bdColor=bdColor, color=color))
+        self.setupUi(textWeight, bold)
 
-    def setupUi(self):
+    def setupUi(self, textWeight, bold):
         font = QFont("Helvetica")
-        font.setWeight(30)
+        font.setWeight(textWeight)
         font.setPixelSize(20)
-        font.setBold(True)
+        font.setBold(bold)
         self.setFont(font)
         self.setText(self.text)
         self.setMinimumSize(self.minXSize, self.ySize)
         self.setMaximumSize(self.minXSize, self.ySize)
-        self.setStyleSheet(style)
+
 
     def enterEvent(self, event: QtCore.QEvent):
         super(CustomButton, self).enterEvent(event)
