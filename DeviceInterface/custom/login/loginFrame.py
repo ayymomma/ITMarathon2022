@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFrame, QPushButton, QLineEdit, QLabel
 
 from custom.customButton import CustomButton
+from webAPI.serverApi import ServerAPI
 
 
 class LoginFrame(QFrame):
@@ -13,6 +14,7 @@ class LoginFrame(QFrame):
         self.loginText = QLabel(self)
         self.deviceIDLineEdit = QLineEdit(self)
         self.loginButton = CustomButton(self, "Log in", 115, 135, 35)
+        self.serverApi = ServerAPI()
 
         self.initUI()
 
@@ -46,5 +48,13 @@ class LoginFrame(QFrame):
         self.loginButton.clicked.connect(self.loginDevice)
 
     def loginDevice(self):
-        print("Login device")
-
+        deviceID = self.deviceIDLineEdit.text()
+        if deviceID == "":
+            self.deviceIDLineEdit.setStyleSheet("border: 2px solid red;")
+        else:
+            self.deviceIDLineEdit.setStyleSheet("border: None;")
+            connected = self.serverApi.connect(deviceID)
+            if connected:
+                self.login_signal.emit(deviceID)
+            else:
+                self.deviceIDLineEdit.setStyleSheet("border: 2px solid red;")

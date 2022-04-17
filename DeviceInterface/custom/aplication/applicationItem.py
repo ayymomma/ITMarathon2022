@@ -18,11 +18,14 @@ QFrame {
 
 
 class ApplicationItem(QFrame):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, appData=None):
         super(ApplicationItem, self).__init__(parent)
         self.versionLabel = QLabel(self)
         self.verticalLine = QFrame(self)
         self.applicationName = QLabel(self)
+
+        self.appData = appData
+
         self.initUI()
 
     def initUI(self):
@@ -37,9 +40,10 @@ class ApplicationItem(QFrame):
 
         # combobox
         self.versionLabel.setGeometry(11, 15, 159, 33)
-        self.versionLabel.setText("Ver. 2.0.0")
+        self.versionLabel.setText(f"Ver. {self.appData['version_id']}")
         self.versionLabel.setObjectName("versionLabel")
         self.versionLabel.setAlignment(Qt.AlignCenter)
+
 
         # vertical line
         self.verticalLine.setGeometry(208, 5, 1, 55)
@@ -53,5 +57,5 @@ class ApplicationItem(QFrame):
         self.applicationName.setFont(font)
         self.applicationName.setGeometry(238, 12, 350, 40)
         self.applicationName.setStyleSheet("color: #FFFFFF;")
-        self.applicationName.setText("Application Name")
+        self.applicationName.setText(self.appData['app_name'])
 

@@ -18,7 +18,6 @@ class ApplicationsFrame(QFrame):
         self.newAppDialog = None
         self.applicationTitle = QLabel(self)
         self.scrollAreaApplications = ScrollAreaApplications(self)
-        self.deviceLabel = QLabel(self)
 
         self.itemList = []
         self.initUI()
@@ -38,13 +37,6 @@ class ApplicationsFrame(QFrame):
         self.scrollAreaApplications.setGeometry(17, 61, 1230, 727)
         self.scrollAreaApplications.scrollAreaWidgetContents.setGeometry(0, 0, 1230, 727)
 
-        font = QFont("Helvetica")
-        font.setWeight(12)
-        font.setPixelSize(20)
-        font.setBold(True)
-        self.deviceLabel.setFont(font)
-        self.deviceLabel.setStyleSheet("color: white;")
-        self.deviceLabel.setGeometry(46, 34, 230, 30)
 
     def addItem(self, item):
         self.itemList.append(item)

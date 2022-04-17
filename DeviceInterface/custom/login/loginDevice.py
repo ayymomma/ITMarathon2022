@@ -1,15 +1,13 @@
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QFrame, QLabel
+from PyQt5.QtWidgets import QFrame
 
-from custom.customButton import CustomButton
-from custom.loginFrame import LoginFrame
+from custom.login.loginFrame import LoginFrame
 
 
 class LoginOrRegisterFrame(QFrame):
 
     def __init__(self, parent):
         super(LoginOrRegisterFrame, self).__init__(parent)
-        self.loginFrame = LoginFrame(parent)
+        self.loginFrame = LoginFrame(self)
         self.initUI()
 
     def initUI(self):

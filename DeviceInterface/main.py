@@ -3,12 +3,11 @@ import sys
 
 import psutil
 from PyQt5 import QtWidgets
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel
+from PyQt5.QtWidgets import QMainWindow, QApplication
 
-from custom.applicationFrame import ApplicationsFrame
-from custom.applicationItem import ApplicationItem
-from custom.loginDevice import LoginOrRegisterFrame
+from custom.aplication.applicationItem import ApplicationItem
+from custom.aplication.deviceFrame import DeviceFrame
+from custom.login.loginDevice import LoginOrRegisterFrame
 from deviceDataReader import DeviceDataReader
 
 style = """
@@ -26,9 +25,8 @@ class MainWindow(QMainWindow):
         self.deviceDataReader = DeviceDataReader()
         self.deviceData = self.deviceDataReader.read()
 
-        self.applicationFrame = ApplicationsFrame(self.centralWidget)
+        self.deviceFrame = DeviceFrame(self.centralWidget)
         self.loginFrame = LoginOrRegisterFrame(self.centralWidget)
-
 
         self.setCentralWidget(self.centralWidget)
 
@@ -41,9 +39,13 @@ class MainWindow(QMainWindow):
         self.setMaximumSize(1350, 900)
         self.setStyleSheet(style)
 
+        self.loginFrame.loginFrame.login_signal.connect(self.login)
 
+        self.deviceFrame.hide()
 
-        self.applicationFrame.hide()
+    def login(self, device_id):
+        self.deviceFrame.show()
+        self.loginFrame.hide()
 
 
 def kill_proc_tree(pid, including_parent=True):
