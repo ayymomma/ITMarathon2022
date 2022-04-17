@@ -35,6 +35,7 @@ CREATE TABLE versions (
     version_name    VARCHAR2(255) NOT NULL,
     timestamp       TIMESTAMP NOT NULL,
     app_id          INTEGER NOT NULL,
+    app_path        VARCHAR2(255),
     PRIMARY KEY(version_id),
     FOREIGN KEY (app_id) REFERENCES applications(app_id)
 );
@@ -53,3 +54,5 @@ SELECT * FROM versions;
 SELECT * FROM devices;
 SELECT * FROM users;
 SELECT * FROM sessions;
+
+DROP TABLE NOTIFICATION;

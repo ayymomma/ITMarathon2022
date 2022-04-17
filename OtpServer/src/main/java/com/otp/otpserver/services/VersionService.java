@@ -11,6 +11,8 @@ public interface VersionService {
 
     Version getVersionOfId(Integer versionId);
 
+    Version getVersionOfNameAndAppid(String versionName, Integer appId);
+
     Version deleteVersion(Integer versionId);
 
     List<Version> deleteAllVersionsOfApp(Integer appId);
