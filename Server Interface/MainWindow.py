@@ -17,6 +17,8 @@ class MainWindow(QMainWindow):
         self.userFrame = UserFrame(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
 
+
+
         self.initUI()
 
     def initUI(self):
