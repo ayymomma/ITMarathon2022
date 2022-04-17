@@ -28,7 +28,7 @@ class ScrollAreaDevices(QScrollArea):
         self.scrollAreaWidgetContents.setGeometry(0, 0, 321, 727)
 
         self.verticalLayout.setSizeConstraint(QLayout.SetMinAndMaxSize)
-        self.verticalLayout.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout.setContentsMargins(0, 10, 0, 10)
         self.verticalLayout.setSpacing(10)
 
         self.verticalLayout.addSpacerItem(self.spacerItem)
