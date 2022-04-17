@@ -68,3 +68,15 @@ class ServerAPI:
         if code == 200 or code == 201:
             return json.loads(response)
         return []
+
+    def addNewVersion(self, appName, appVersion, appPath):
+        response, code = self.postAuthorized("/applications/" + appName + "/add_version", {"versionName": appVersion, "appPath": appPath})
+        if code == 200 or code == 201:
+            return True
+        return False
+
+    def getApplicationsForDevice(self, deviceId):
+        response, code = self.getAuthorized("/devices/" + deviceId + "/apps")
+        if code == 200 or code == 201:
+            return json.loads(response)
+        return []

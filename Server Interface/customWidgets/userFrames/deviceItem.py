@@ -1,6 +1,9 @@
-from PyQt5.QtCore import QSize, Qt
+from PyQt5 import QtGui
+from PyQt5.QtCore import QSize, Qt, pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton, QSizePolicy, QLabel
+
+from webAPI.serverApi import ServerAPI
 
 style = """
 QPushButton {
@@ -15,12 +18,14 @@ QLabel {
 
 
 class DeviceItem(QPushButton):
+    add_apps_signal = pyqtSignal()
 
     def __init__(self, parent=None):
         super(DeviceItem, self).__init__(parent)
         self.deviceName = QLabel(self)
         self.deviceID = ""
         self.appList = []
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -48,3 +53,10 @@ class DeviceItem(QPushButton):
 
     def setDeviceId(self, id):
         self.deviceID = id
+
+    def mouseReleaseEvent(self, e):
+        super(DeviceItem, self).mouseReleaseEvent(e)
+        apps = self.server.getApplicationsForDevice(self.deviceID)
+        print(apps)
+        # self.add_apps_signal.emit()
+

@@ -2,7 +2,9 @@ from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QFrame, QComboBox, QLabel, QSizePolicy
 
+from customWidgets.adminFrames.newVersionDialog import NewVersionDialog
 from customWidgets.buttons.customButton import CustomButton
+from webAPI.serverApi import ServerAPI
 
 style = """
 QFrame {
@@ -20,11 +22,13 @@ QComboBox{
 class ApplicationItem(QFrame):
     def __init__(self, parent=None):
         super(ApplicationItem, self).__init__(parent)
+        self.newVersionDialog = None
         self.versionComboBox = QComboBox(self)
         self.verticalLine = QFrame(self)
         self.applicationName = QLabel(self)
         self.uploadButton = CustomButton(self, "upload", 103, 123, 28, bgColor="#5AE343", bdColor="#5AE343", color="#000000", textWeight=10, bold=False)
         self.deleteButton = CustomButton(self, "remove", 103, 123, 28, bgColor="#e34343", bdColor="#e34343", color="#000000", textWeight=10, bold=False)
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -57,6 +61,7 @@ class ApplicationItem(QFrame):
         # update button
         self.uploadButton.setGeometry(1103, 16, 119, 32)
         self.uploadButton.setIcon(QIcon('customWidgets/icons/Upload.png'))
+        self.uploadButton.clicked.connect(self.openNewVersionDialog)
 
         # delete button
         self.deleteButton.setGeometry(973, 16, 119, 32)
@@ -68,3 +73,14 @@ class ApplicationItem(QFrame):
     def setVersion(self, version):
         for vers in version:
             self.versionComboBox.addItem(vers['versionName'])
+
+    def openNewVersionDialog(self):
+        self.newVersionDialog = NewVersionDialog(self)
+        self.newVersionDialog.show()
+        self.newVersionDialog.add_vers_signal.connect(self.addVers)
+
+    def addVers(self, vers, path):
+        if self.server.addNewVersion(self.applicationName.text(), vers, path):
+            self.versionComboBox.addItem(vers)
+        self.newVersionDialog.hide()
+        self.newVersionDialog = None

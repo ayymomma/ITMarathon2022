@@ -76,9 +76,15 @@ class UserFrame(QFrame):
         for device in deviceList:
             print(device)
             dev = DeviceItem()
+            # dev.add_apps_signal.connect(self.addApps)
             dev.setName(device['deviceName'])
             dev.setDeviceId(device['deviceId'])
             self.devicesFrame.addDevice(dev)
+
+    # def addApps(self, apps):
+    #     for app in apps:
+    #         self.applicationsFrame.addItem(app)
+
 
 
 
