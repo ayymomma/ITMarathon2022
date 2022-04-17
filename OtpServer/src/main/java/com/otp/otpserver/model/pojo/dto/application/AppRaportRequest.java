@@ -1,11 +1,11 @@
-package com.otp.otpserver.model.pojo.dto;
+package com.otp.otpserver.model.pojo.dto.application;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class AppRaportResponse {
+public class AppRaportRequest {
 
     private List<AppVersionRequest> appVersionRequestList;
 

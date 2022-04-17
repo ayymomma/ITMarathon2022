@@ -1,10 +1,10 @@
 package com.otp.otpserver.controller;
 
 import com.otp.otpserver.model.exception.HttpResponseException;
-import com.otp.otpserver.model.pojo.dto.AppVersionRequest;
-import com.otp.otpserver.model.pojo.dto.AppVersionResponse;
-import com.otp.otpserver.model.pojo.dto.VersionRequest;
-import com.otp.otpserver.model.pojo.dto.VersionResponse;
+import com.otp.otpserver.model.pojo.dto.application.AppVersionRequest;
+import com.otp.otpserver.model.pojo.dto.application.AppVersionResponse;
+import com.otp.otpserver.model.pojo.dto.version.VersionRequest;
+import com.otp.otpserver.model.pojo.dto.version.VersionResponse;
 import com.otp.otpserver.model.pojo.erd.Application;
 import com.otp.otpserver.model.pojo.erd.Version;
 import com.otp.otpserver.services.ApplicationService;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

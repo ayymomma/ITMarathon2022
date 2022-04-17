@@ -9,7 +9,7 @@ CREATE TABLE users (
 
 CREATE TABLE Devices (
     device_id       INTEGER NOT NULL,
-    defice_name     VARCHAR2(255) NOT NULL,
+    device_name     VARCHAR2(255) NOT NULL,
     user_id         INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -21,11 +21,19 @@ CREATE TABLE applications (
     PRIMARY KEY(app_id)
 );
 
+
 CREATE TABLE versions (
     version_id      INTEGER NOT NULL,
     version_name    VARCHAR2(255) NOT NULL,
-    timestamp       DATE NOT NULL,
+    timestamp       TIMESTAMP NOT NULL,
     app_id          INTEGER NOT NULL,
     PRIMARY KEY(version_id),
     FOREIGN KEY (app_id) REFERENCES applications(app_id)
 );
+
+ALTER TABLE TOKENS ADD CONSTRAINT user_token_fk FOREIGN KEY (user_id) REFERENCES user (user_id);
+
+SELECT * FROM applications;
+SELECT * FROM versions;
+
+SELECT * FROM users;

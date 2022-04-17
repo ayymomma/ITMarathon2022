@@ -13,7 +13,7 @@ public class User {
     @Column(name = "USER_ID", nullable = false)
     private Integer userId;
 
-    @Column(name = "USERNAME", nullable = false)
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
     @Column(name = "PASSWORD", nullable = false)
