@@ -6,6 +6,8 @@ from customWidgets.buttons.customButton import CustomButton
 from customWidgets.userFrames.applicationsFrame import ApplicationsFrame
 from customWidgets.userFrames.deviceItem import DeviceItem
 from customWidgets.userFrames.devicesFrame import DevicesFrame
+from customWidgets.userFrames.newDeviceDialog import NewDeviceDialog
+from webAPI.serverApi import ServerAPI
 
 style = """
 QFrame {
@@ -20,10 +22,12 @@ QLabel {
 class UserFrame(QFrame):
     def __init__(self, parent):
         super(UserFrame, self).__init__(parent)
+        self.newDeviceDialog = None
         self.welcomeLabel = QLabel(self)
         self.devicesFrame = DevicesFrame(self)
         self.applicationsFrame = ApplicationsFrame(self)
         self.addDeviceButton = CustomButton(self, "", 218, 238, 43)
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -35,8 +39,8 @@ class UserFrame(QFrame):
         font.setPixelSize(30)
         font.setBold(True)
         self.welcomeLabel.setFont(font)
-        self.welcomeLabel.setText("Welcome, user!")
         self.welcomeLabel.setGeometry(90, 25, 300, 30)
+        self.welcomeLabel.setText("Welcome!")
 
         self.addDeviceButton.setGeometry(116, 825, 218, 43)
         self.addDeviceButton.setText("Add new device")
@@ -50,4 +54,22 @@ class UserFrame(QFrame):
         font.setWeight(10)
         font.setPixelSize(20)
         self.addDeviceButton.setFont(font)
+        self.addDeviceButton.clicked.connect(self.addDeviceButtonClicked)
+        
+    def addDeviceButtonClicked(self):
+        self.newDeviceDialog = NewDeviceDialog(self)
+        self.newDeviceDialog.add_signal.connect(self.addNewDevice)
+        self.newDeviceDialog.show()
+
+    def addNewDevice(self, name, id):
+        self.newDeviceDialog.hide()
+        self.newDeviceDialog = None
+        device = DeviceItem()
+        device.setName(name)
+        device.setDeviceId(id)
+        if self.server.addDevice(id, name):
+            self.devicesFrame.addDevice(device)
+
+
+
 

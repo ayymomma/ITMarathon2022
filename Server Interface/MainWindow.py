@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from customWidgets.adminFrames.adminFrame import AdminFrame
 from customWidgets.userFrames.userFrame import UserFrame
 from customWidgets.welcomeFrames.welcomeFrame import WelcomeFrame
+from webAPI.serverApi import ServerAPI
 
 
 class MainWindow(QMainWindow):
@@ -17,9 +18,8 @@ class MainWindow(QMainWindow):
         self.welcomeFrame = WelcomeFrame(self.centralWidget)
         self.userFrame = UserFrame(self.centralWidget)
         self.adminFrame = AdminFrame(self.centralWidget)
+        self.server = ServerAPI()
         self.setCentralWidget(self.centralWidget)
-
-
 
         self.initUI()
 
@@ -34,12 +34,18 @@ class MainWindow(QMainWindow):
         self.adminFrame.hide()
 
         # welcome frame
-        self.welcomeFrame.loginOrRegisterFrame.loginFrame.loginButton.clicked.connect(self.login)
+        self.welcomeFrame.loginOrRegisterFrame.loginFrame.login_signal.connect(self.login)
 
-    def login(self):
-        self.welcomeFrame.hide()
-        # self.userFrame.show()
-        self.adminFrame.show()
+    def login(self, role):
+        if role == "ADMIN":
+            self.welcomeFrame.hide()
+            self.adminFrame.welcomeLabel.setText(f'Welcome, {self.server.user}!')
+            self.adminFrame.show()
+        elif role == "USER":
+            self.welcomeFrame.hide()
+            self.adminFrame.welcomeLabel.setText(f'Welcome, {self.server.user}!')
+            self.userFrame.show()
+
 
 
 def kill_proc_tree(pid, including_parent=True):
@@ -50,8 +56,8 @@ def kill_proc_tree(pid, including_parent=True):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    wifiTest = MainWindow()
-    wifiTest.show()
+    itMarathon = MainWindow()
+    itMarathon.show()
     returnValue = app.exec()
     if returnValue is not None:
         kill_proc_tree(os.getpid())

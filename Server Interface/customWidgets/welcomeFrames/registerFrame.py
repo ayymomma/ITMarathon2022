@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFrame, QLabel, QLineEdit, QPushButton
 
 from customWidgets.buttons.customButton import CustomButton
+from webAPI.serverApi import ServerAPI
 
 
 class RegisterFrame(QFrame):
@@ -13,8 +14,10 @@ class RegisterFrame(QFrame):
         self.usernameLineEdit = QLineEdit(self)
         self.passwordLineEdit = QLineEdit(self)
         self.repeatPasswordLineEdit = QLineEdit(self)
+        self.statusLabel = QLabel(self)
         self.registerButton = CustomButton(self, "Register", 115, 135, 35)
         self.backButton = CustomButton(self, "Back", 115, 135, 35)
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -31,6 +34,7 @@ class RegisterFrame(QFrame):
         self.passwordLineEdit.setFont(QFont("Arial", 15))
         self.passwordLineEdit.setAlignment(Qt.AlignCenter)
         self.passwordLineEdit.setStyleSheet("border: None; border-radius: 10px;")
+        self.passwordLineEdit.setEchoMode(QLineEdit.Password)
 
         # repeat password line edit
         self.repeatPasswordLineEdit.setPlaceholderText("Repeat password")
@@ -38,9 +42,11 @@ class RegisterFrame(QFrame):
         self.repeatPasswordLineEdit.setFont(QFont("Arial", 15))
         self.repeatPasswordLineEdit.setAlignment(Qt.AlignCenter)
         self.repeatPasswordLineEdit.setStyleSheet("border: None; border-radius: 10px;")
+        self.repeatPasswordLineEdit.setEchoMode(QLineEdit.Password)
 
         # register button
         self.registerButton.setGeometry(180, 600, 115, 35)
+        self.registerButton.clicked.connect(self.register)
 
         # back button
         self.backButton.setGeometry(350, 600, 115, 35)
@@ -54,3 +60,25 @@ class RegisterFrame(QFrame):
         self.registerText.setGeometry(190, 260, 260, 50)
         self.registerText.setAlignment(Qt.AlignCenter)
         self.registerText.setText("REGISTER")
+
+        # status label
+        font = QFont("Helvetica")
+        font.setWeight(15)
+        font.setPixelSize(15)
+        font.setBold(True)
+        self.statusLabel.setFont(font)
+        self.statusLabel.setGeometry(215, 546, 230, 30)
+        self.statusLabel.setAlignment(Qt.AlignCenter)
+
+
+    def register(self):
+        username = self.usernameLineEdit.text()
+        password = self.passwordLineEdit.text()
+        repeatPassword = self.repeatPasswordLineEdit.text()
+
+        if password == repeatPassword:
+            if self.server.register(username, password):
+                self.statusLabel.setText("Successfully registered!")
+            else:
+                self.statusLabel.setText("Username already exists!")
+

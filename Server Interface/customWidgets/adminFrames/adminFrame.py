@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QFrame, QLabel
 
 from customWidgets.adminFrames.applicationItem import ApplicationItem
 from customWidgets.adminFrames.applicationsFrame import ApplicationsFrame
+from webAPI.serverApi import ServerAPI
 
 style = """
 QFrame {
@@ -31,7 +32,7 @@ class AdminFrame(QFrame):
         font.setPixelSize(30)
         font.setBold(True)
         self.welcomeLabel.setFont(font)
-        self.welcomeLabel.setText("Welcome, user!")
+        self.welcomeLabel.setText("Welcome!")
         self.welcomeLabel.setGeometry(90, 25, 300, 30)
 
         self.applicationFrame.addItem(ApplicationItem())

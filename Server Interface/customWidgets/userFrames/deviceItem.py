@@ -19,6 +19,7 @@ class DeviceItem(QPushButton):
     def __init__(self, parent=None):
         super(DeviceItem, self).__init__(parent)
         self.deviceName = QLabel(self)
+        self.deviceID = ""
         self.appList = []
         self.initUI()
 
@@ -41,3 +42,9 @@ class DeviceItem(QPushButton):
         self.deviceName.setGeometry(46, 14, 237, 29)
         self.deviceName.setAlignment(Qt.AlignCenter)
         self.deviceName.setText("Device Name")
+
+    def setName(self, text):
+        self.deviceName.setText(text)
+
+    def setDeviceId(self, id):
+        self.deviceID = id

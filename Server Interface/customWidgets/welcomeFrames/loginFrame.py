@@ -1,11 +1,14 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFrame, QPushButton, QLineEdit, QLabel
 
 from customWidgets.buttons.customButton import CustomButton
+from webAPI.serverApi import ServerAPI
 
 
 class LoginFrame(QFrame):
+    login_signal = pyqtSignal(str)
+
     def __init__(self, parent):
         super(LoginFrame, self).__init__(parent)
         self.loginText = QLabel(self)
@@ -13,6 +16,8 @@ class LoginFrame(QFrame):
         self.passwordLineEdit = QLineEdit(self)
         self.loginButton = CustomButton(self, "Log in", 115, 135, 35)
         self.backButton = CustomButton(self, "Back", 115, 135, 35)
+        self.loginError = QLabel(self)
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -29,9 +34,11 @@ class LoginFrame(QFrame):
         self.passwordLineEdit.setFont(QFont("Arial", 15))
         self.passwordLineEdit.setAlignment(Qt.AlignCenter)
         self.passwordLineEdit.setStyleSheet("border: None; border-radius: 10px;")
+        self.passwordLineEdit.setEchoMode(QLineEdit.Password)
 
         # login button
         self.loginButton.setGeometry(180, 600, 115, 35)
+        self.loginButton.clicked.connect(self.login)
 
         # back button
         self.backButton.setGeometry(350, 600, 115, 35)
@@ -45,4 +52,24 @@ class LoginFrame(QFrame):
         self.loginText.setText("Log in")
         self.loginText.setGeometry(215, 320, 200, 60)
         self.loginText.setAlignment(Qt.AlignCenter)
+
+
+        # login error label
+        font = QFont("Helvetica")
+        font.setWeight(15)
+        font.setPixelSize(15)
+        font.setBold(True)
+        self.loginError.setFont(font)
+        self.loginError.setGeometry(204, 530, 230, 30)
+        self.loginError.setAlignment(Qt.AlignCenter)
+
+    def login(self):
+        username = self.usernameLineEdit.text()
+        password = self.passwordLineEdit.text()
+        logged, role = self.server.login(username, password)
+        if logged:
+            self.login_signal.emit(role)
+        else:
+            self.loginError.setText("Wrong username or password")
+
 
