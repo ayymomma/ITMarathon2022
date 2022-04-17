@@ -15,9 +15,4 @@ public class Application {
 
     @Column(name = "APP_NAME", nullable = false)
     private String appName;
-
-    @Column(name = "APP_PATH")
-    private String appPath;
-
-
 }

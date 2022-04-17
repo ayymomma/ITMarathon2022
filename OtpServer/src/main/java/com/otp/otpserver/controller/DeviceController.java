@@ -42,7 +42,7 @@ public class DeviceController {
             DeviceSession session = deviceService.keepAlive(deviceId.getDeviceId());
             Device device = deviceService.getDeviceOfId(deviceId.getDeviceId());
             DeviceResponse response = new DeviceResponse(device);
-            return ok(device);
+            return ok(response);
         } catch (HttpResponseException e) {
             return FromHttpResponseError(e);
         }

@@ -158,16 +158,17 @@ public class ApplicationController {
         }
     }
 
-    @PostMapping(path = "{ID}/add_version")
+    @PostMapping(path = "{APP_NAME}/add_version")
     public @ResponseBody
-    ResponseEntity<?> addVersionToApp(@PathVariable(name = "ID") Integer appId, @RequestBody VersionRequest version){
+    ResponseEntity<?> addVersionToApp(@PathVariable(name = "APP_NAME") String appName, @RequestBody VersionRequest version){
         try {
-            Application findApp = applicationService.getApplication(appId);
+            Application findApp = applicationService.getApplicationsByName(appName).get(0);
 
             Version versionERD = new Version();
             versionERD.setVersionName(version.getVersionName());
             versionERD.setApp(findApp);
             versionERD.setTimestamp(new Timestamp(System.currentTimeMillis()));
+            versionERD.setAppPath(version.getAppPath());
 
             Version added = versionService.addVersion(versionERD);
 

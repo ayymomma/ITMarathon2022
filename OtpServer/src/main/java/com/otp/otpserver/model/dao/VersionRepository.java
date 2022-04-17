@@ -4,6 +4,7 @@ import com.otp.otpserver.model.pojo.erd.Version;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface VersionRepository extends CrudRepository<Version, Integer> {
@@ -18,4 +19,6 @@ public interface VersionRepository extends CrudRepository<Version, Integer> {
     List<Version> findAllByAppAppIdAndVersionName(Integer appId, String versionName);
 
     List<Version> deleteAllByAppAppId(Integer appId);
+
+    List<Version> findAllByAppAppIdAndAndTimestampGreaterThan(Integer appId, Timestamp timestamp);
 }

@@ -29,6 +29,7 @@ CREATE TABLE applications (
 );
 
 
+drop table versions;
 CREATE TABLE versions (
     version_id      INTEGER NOT NULL,
     version_name    VARCHAR2(255) NOT NULL,
@@ -37,6 +38,11 @@ CREATE TABLE versions (
     PRIMARY KEY(version_id),
     FOREIGN KEY (app_id) REFERENCES applications(app_id)
 );
+
+ALTER TABLE versions ADD app_path varchar2(255);
+ALTER TABLE versions ADD CONSTRAINT not_null_path NOT NULL;
+ALTER TABLE versions ADD CONSTRAINT dfPath DEFAULT '/' FOR app_path;
+
 
 ALTER TABLE TOKENS ADD CONSTRAINT user_token_fk FOREIGN KEY (user_id) REFERENCES user (user_id);
 

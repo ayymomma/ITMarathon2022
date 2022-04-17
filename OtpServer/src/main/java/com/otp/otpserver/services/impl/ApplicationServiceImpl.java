@@ -87,12 +87,6 @@ public class ApplicationServiceImpl implements ApplicationService {
             changedName = true;
         }
 
-        // Schimbam elementele care sunt diferite
-        if (application.getAppPath() != null && !application.getAppPath().equals(otherApplication.getAppPath())) {
-            otherApplication.setAppPath(application.getAppPath());
-            changedName = true;
-        }
-
         // Search for other author with the same name
         if(changedName) {
             List<Application> sameNameOther = applicationRepository.findByAppName(otherApplication.getAppName());
@@ -119,5 +113,15 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new HttpResponseException("Application does not exist.", HttpStatus.NOT_FOUND);
 
         return versionRepository.findByAppAppId(appId);
+    }
+
+    @Override
+    public List<Version> getNewerVersions(Integer appId, String versionName) {
+        List<Version> versionByName = versionRepository.findAllByAppAppIdAndVersionName(appId, versionName);
+
+        if(versionByName.isEmpty())
+            throw new HttpResponseException("No Version with that name for Application!", HttpStatus.NOT_FOUND);
+
+        return versionRepository.findAllByAppAppIdAndAndTimestampGreaterThan(appId, versionByName.get(0).getTimestamp());
     }
 }
