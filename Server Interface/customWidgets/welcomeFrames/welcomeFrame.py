@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QFrame
 
-from customFrames.login.descriptionFrame import DescriptionFrame
-from customFrames.login.loginOrRegisterFrame import LoginOrRegisterFrame
+from customWidgets.welcomeFrames.descriptionFrame import DescriptionFrame
+from customWidgets.welcomeFrames.loginOrRegisterFrame import LoginOrRegisterFrame
 
 
 class WelcomeFrame(QFrame):

@@ -7,4 +7,4 @@ class DescriptionFrame(QFrame):
         self.initUI()
 
     def initUI(self):
-        self.setStyleSheet("background-color: #5B59A7;")
+        self.setStyleSheet("background-color: rgba(85, 47, 208, 255);")

@@ -1,5 +1,8 @@
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFrame, QLabel, QLineEdit, QPushButton
+
+from customWidgets.buttons.customButton import CustomButton
 
 
 class RegisterFrame(QFrame):
@@ -10,7 +13,8 @@ class RegisterFrame(QFrame):
         self.usernameLineEdit = QLineEdit(self)
         self.passwordLineEdit = QLineEdit(self)
         self.repeatPasswordLineEdit = QLineEdit(self)
-        self.registerButton = QPushButton(self)
+        self.registerButton = CustomButton(self, "Register", 115, 135, 35)
+        self.backButton = CustomButton(self, "Back", 115, 135, 35)
         self.initUI()
 
     def initUI(self):
@@ -26,11 +30,18 @@ class RegisterFrame(QFrame):
         self.repeatPasswordLineEdit.setPlaceholderText("Repeat password")
         self.repeatPasswordLineEdit.setGeometry(120, 490, 400, 45)
 
-        # login button
-        self.registerButton.setGeometry(260, 640, 115, 35)
-        self.registerButton.setText("Register")
+        # register button
+        self.registerButton.setGeometry(180, 600, 115, 35)
 
-        # login label
-        self.registerText.setGeometry(215, 260, 200, 50)
+        # back button
+        self.backButton.setGeometry(350, 600, 115, 35)
+
+        # welcomeFrames label
+        font = QFont("Helvetica")
+        font.setWeight(30)
+        font.setPixelSize(50)
+        font.setBold(True)
+        self.registerText.setFont(font)
+        self.registerText.setGeometry(190, 260, 260, 50)
         self.registerText.setAlignment(Qt.AlignCenter)
         self.registerText.setText("REGISTER")

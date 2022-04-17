@@ -2,16 +2,15 @@ import os
 import sys
 
 import psutil
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
-from customFrames.login.welcomeFrame import WelcomeFrame
+from customWidgets.welcomeFrames.welcomeFrame import WelcomeFrame
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-
         self.centralWidget = QtWidgets.QWidget(self)
         self.welcomeFrame = WelcomeFrame(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
@@ -19,7 +18,7 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Wifi Test")
+        self.setWindowTitle("ITMarathon")
         self.resize(1350, 900)
         self.setMinimumSize(1350, 900)
         self.setMaximumSize(1350, 900)
