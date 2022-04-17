@@ -1,4 +1,4 @@
-package com.otp.otpserver.model.pojo.dto;
+package com.otp.otpserver.model.pojo.dto.application;
 
 import lombok.Data;
 

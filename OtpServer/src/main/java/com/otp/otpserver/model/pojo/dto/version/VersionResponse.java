@@ -1,4 +1,4 @@
-package com.otp.otpserver.model.pojo.dto;
+package com.otp.otpserver.model.pojo.dto.version;
 
 import com.otp.otpserver.model.pojo.erd.Application;
 import com.otp.otpserver.model.pojo.erd.Version;

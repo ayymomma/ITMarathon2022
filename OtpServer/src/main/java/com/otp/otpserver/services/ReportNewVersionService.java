@@ -1,7 +1,7 @@
 package com.otp.otpserver.services;
 
-import com.otp.otpserver.model.pojo.dto.AppVersionRequest;
-import com.otp.otpserver.model.pojo.dto.AppVersionResponse;
+import com.otp.otpserver.model.pojo.dto.application.AppVersionRequest;
+import com.otp.otpserver.model.pojo.dto.application.AppVersionResponse;
 
 import java.util.List;
 

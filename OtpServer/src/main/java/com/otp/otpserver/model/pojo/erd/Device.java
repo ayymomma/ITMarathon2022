@@ -11,7 +11,7 @@ public class Device {
     @Id
     @GeneratedValue
     @Column(name = "DEVICE_ID", nullable = false)
-    private Long deviceId;
+    private Integer deviceId;
 
     @Column(name = "DEVICE_NAME", nullable = false)
     private String deviceName;
