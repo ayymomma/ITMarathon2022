@@ -35,7 +35,7 @@ class ScrollAreaApplications(QScrollArea):
 
         self.setWidget(self.scrollAreaWidgetContents)
 
-    def addWidget(self, widget):
+    def addItem(self, widget):
         self.verticalLayout.removeItem(self.spacerItem)
         self.verticalLayout.addWidget(widget)
         self.verticalLayout.addItem(self.spacerItem)

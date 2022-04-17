@@ -5,6 +5,7 @@ import psutil
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
+from customWidgets.adminFrames.adminFrame import AdminFrame
 from customWidgets.userFrames.userFrame import UserFrame
 from customWidgets.welcomeFrames.welcomeFrame import WelcomeFrame
 
@@ -15,6 +16,7 @@ class MainWindow(QMainWindow):
         self.centralWidget = QtWidgets.QWidget(self)
         self.welcomeFrame = WelcomeFrame(self.centralWidget)
         self.userFrame = UserFrame(self.centralWidget)
+        self.adminFrame = AdminFrame(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
 
 
@@ -29,13 +31,15 @@ class MainWindow(QMainWindow):
 
         # user frame
         self.userFrame.hide()
+        self.adminFrame.hide()
 
         # welcome frame
         self.welcomeFrame.loginOrRegisterFrame.loginFrame.loginButton.clicked.connect(self.login)
 
     def login(self):
         self.welcomeFrame.hide()
-        self.userFrame.show()
+        # self.userFrame.show()
+        self.adminFrame.show()
 
 
 def kill_proc_tree(pid, including_parent=True):

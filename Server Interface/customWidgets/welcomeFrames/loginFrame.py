@@ -19,10 +19,16 @@ class LoginFrame(QFrame):
         # username line edit
         self.usernameLineEdit.setPlaceholderText("Username")
         self.usernameLineEdit.setGeometry(120, 410, 400, 45)
+        self.usernameLineEdit.setFont(QFont("Arial", 15))
+        self.usernameLineEdit.setAlignment(Qt.AlignCenter)
+        self.usernameLineEdit.setStyleSheet("border: None; border-radius: 10px;")
 
         # password line edit
         self.passwordLineEdit.setPlaceholderText("Password")
         self.passwordLineEdit.setGeometry(120, 470, 400, 45)
+        self.passwordLineEdit.setFont(QFont("Arial", 15))
+        self.passwordLineEdit.setAlignment(Qt.AlignCenter)
+        self.passwordLineEdit.setStyleSheet("border: None; border-radius: 10px;")
 
         # login button
         self.loginButton.setGeometry(180, 600, 115, 35)
