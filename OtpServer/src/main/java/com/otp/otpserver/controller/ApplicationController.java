@@ -1,15 +1,24 @@
 package com.otp.otpserver.controller;
 
 import com.otp.otpserver.model.exception.HttpResponseException;
-import com.otp.otpserver.model.pojo.Application;
-import com.otp.otpserver.model.pojo.dto.ApplicationNoId;
+import com.otp.otpserver.model.pojo.dto.AppVersionRequest;
+import com.otp.otpserver.model.pojo.dto.AppVersionResponse;
+import com.otp.otpserver.model.pojo.dto.VersionRequest;
+import com.otp.otpserver.model.pojo.dto.VersionResponse;
+import com.otp.otpserver.model.pojo.erd.Application;
+import com.otp.otpserver.model.pojo.erd.Version;
 import com.otp.otpserver.services.ApplicationService;
+import com.otp.otpserver.services.ReportNewVersionService;
+import com.otp.otpserver.services.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.otp.otpserver.services.utils.ResponseEntityUtil.FromHttpResponseError;
@@ -24,12 +33,30 @@ public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
 
+    @Autowired
+    private VersionService versionService;
+
+    @Autowired
+    private ReportNewVersionService reportNewVersionService;
+
+
     /**
-     * Method responsible for getting an author from db
-     *
-     * @param id the id of the author
-     * @return An author
+     * Gets a list of apps with versions avenable
+     * @param appVersionRequest List of (appName, versionName)
+     * @return A list of apps and list of versions available
      */
+    @PostMapping(path = "check-versions")
+    public @ResponseBody
+    ResponseEntity<?> getLatestVersionList(@RequestBody List<AppVersionRequest> appVersionRequest){
+        try{
+            List<AppVersionResponse> appVersionResponse = reportNewVersionService.getNewVersions(appVersionRequest);
+
+            return ok(appVersionResponse);
+        } catch (HttpResponseException e) {
+            return FromHttpResponseError(e);
+        }
+    }
+
     @GetMapping(path = "{ID}")
     public @ResponseBody
     ResponseEntity<?> getApplication(@PathVariable("ID") Integer id) {
@@ -37,6 +64,23 @@ public class ApplicationController {
             Application app = applicationService.getApplication(id);
 
             return ok(app);
+
+        } catch (HttpResponseException e) {
+            return FromHttpResponseError(e);
+        }
+    }
+
+    @GetMapping(path = "{ID}/versions")
+    public @ResponseBody
+    ResponseEntity<?> getVersions(@PathVariable("ID") Integer appId) {
+        try {
+            List<Version> versionList = applicationService.getAllVersionsOfApp(appId);
+            List<VersionResponse> versionResponses = new ArrayList<>();
+
+            for(Version version : versionList){
+                versionResponses.add(new VersionResponse(version));
+            }
+            return ok(versionResponses);
 
         } catch (HttpResponseException e) {
             return FromHttpResponseError(e);
@@ -114,6 +158,26 @@ public class ApplicationController {
             return FromHttpResponseError(e);
         }
     }
+
+    @PostMapping(path = "{ID}/add_version")
+    public @ResponseBody
+    ResponseEntity<?> addVersionToApp(@PathVariable(name = "ID") Integer appId, @RequestBody VersionRequest version){
+        try {
+            Application findApp = applicationService.getApplication(appId);
+
+            Version versionERD = new Version();
+            versionERD.setVersionName(version.getVersionName());
+            versionERD.setApp(findApp);
+            versionERD.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+            Version added = versionService.addVersion(versionERD);
+
+            return ok().body(new VersionResponse(added));
+        } catch (HttpResponseException e) {
+            return FromHttpResponseError(e);
+        }
+    }
+
 
 
 }

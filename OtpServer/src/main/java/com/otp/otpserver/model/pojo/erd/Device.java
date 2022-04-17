@@ -1,4 +1,4 @@
-package com.otp.otpserver.model.pojo;
+package com.otp.otpserver.model.pojo.erd;
 
 import lombok.Data;
 
@@ -19,4 +19,5 @@ public class Device {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
 }

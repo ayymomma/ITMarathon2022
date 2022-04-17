@@ -1,6 +1,7 @@
 package com.otp.otpserver.services;
 
-import com.otp.otpserver.model.pojo.Application;
+import com.otp.otpserver.model.pojo.erd.Application;
+import com.otp.otpserver.model.pojo.erd.Version;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface ApplicationService {
     Application updateApplication(Integer appId, Application application);
 
     List<Application> getApplicationsByName(String name);
+
+    List<Version> getAllVersionsOfApp(Integer appId);
 
 }

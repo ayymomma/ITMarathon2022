@@ -1,8 +1,10 @@
 package com.otp.otpserver.services.impl;
 
 import com.otp.otpserver.model.dao.ApplicationRepository;
+import com.otp.otpserver.model.dao.VersionRepository;
 import com.otp.otpserver.model.exception.HttpResponseException;
-import com.otp.otpserver.model.pojo.Application;
+import com.otp.otpserver.model.pojo.erd.Application;
+import com.otp.otpserver.model.pojo.erd.Version;
 import com.otp.otpserver.services.ApplicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final VersionRepository versionRepository;
 
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository) {
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, VersionRepository versionRepository) {
         this.applicationRepository = applicationRepository;
+        this.versionRepository = versionRepository;
     }
 
 
@@ -104,5 +108,16 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public List<Application> getApplicationsByName(String name) {
         return applicationRepository.findByAppName(name);
+    }
+
+    @Override
+    public List<Version> getAllVersionsOfApp(Integer appId) {
+        // Check if app exists
+        Optional<Application> otherApplicationOptional = applicationRepository.findById(appId);
+
+        if(otherApplicationOptional.isEmpty())
+            throw new HttpResponseException("Application does not exist.", HttpStatus.NOT_FOUND);
+
+        return versionRepository.findByAppAppId(appId);
     }
 }

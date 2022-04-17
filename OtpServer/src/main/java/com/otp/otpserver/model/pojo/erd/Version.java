@@ -1,8 +1,9 @@
-package com.otp.otpserver.model.pojo;
+package com.otp.otpserver.model.pojo.erd;
 
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Data
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "VERSIONS")
 public class Version {
     @Id
+    @GeneratedValue
     @Column(name = "VERSION_ID", nullable = false)
     private Integer versionId;
 
@@ -17,7 +19,7 @@ public class Version {
     private String versionName;
 
     @Column(name = "TIMESTAMP", nullable = false)
-    private LocalDate timestamp;
+    private Timestamp timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "APP_ID", nullable = false)

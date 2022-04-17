@@ -1,6 +1,6 @@
 package com.otp.otpserver.model.pojo.dto;
 
-import com.otp.otpserver.model.pojo.Application;
+import com.otp.otpserver.model.pojo.erd.Application;
 import lombok.Data;
 
 import java.io.Serializable;
