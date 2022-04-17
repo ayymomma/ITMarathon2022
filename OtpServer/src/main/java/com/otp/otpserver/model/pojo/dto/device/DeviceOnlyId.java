@@ -3,7 +3,6 @@ package com.otp.otpserver.model.pojo.dto.device;
 import lombok.Data;
 
 @Data
-public class DeviceRequest {
+public class DeviceOnlyId {
     private String deviceId;
-    private String deviceName;
 }

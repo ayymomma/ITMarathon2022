@@ -11,7 +11,11 @@ public interface DeviceService {
 
     List<Device> getAllDevicesOfUser(Integer userId);
 
-    DeviceSession connectDevice(Integer deviceId);
+    DeviceSession connectDevice(String deviceId);
 
-    DeviceSession keepAlive(Integer deviceId);
+    DeviceSession keepAlive(String deviceId);
+
+    Device getDeviceOfId(String deviceId);
+
+    DeviceSession disconnectDevice(String deviceId);
 }

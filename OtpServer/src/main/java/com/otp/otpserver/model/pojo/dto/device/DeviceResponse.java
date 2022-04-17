@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class DeviceResponse {
-    private Integer deviceId;
+    private String deviceId;
     private String deviceName;
 
     public DeviceResponse(Device device){

@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface DeviceRepository extends CrudRepository<Device, Integer> {
-    Device findByDeviceNameAndUserUserId(String deviceName, Integer userId);
+public interface DeviceRepository extends CrudRepository<Device, String> {
+    Device findByDeviceIdAndUserUserId(String deviceId, Integer userId);
     List<Device> findAllByUserUserId(Integer userId);
 }
