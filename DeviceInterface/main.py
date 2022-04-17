@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel
 
 from custom.applicationFrame import ApplicationsFrame
 from custom.applicationItem import ApplicationItem
+from custom.loginDevice import LoginOrRegisterFrame
 from deviceDataReader import DeviceDataReader
 
 style = """
@@ -26,9 +27,8 @@ class MainWindow(QMainWindow):
         self.deviceData = self.deviceDataReader.read()
 
         self.applicationFrame = ApplicationsFrame(self.centralWidget)
-        self.applicationFrame.addItem(ApplicationItem())
+        self.loginFrame = LoginOrRegisterFrame(self.centralWidget)
 
-        self.deviceLabel = QLabel(self.centralWidget)
 
         self.setCentralWidget(self.centralWidget)
 
@@ -41,14 +41,9 @@ class MainWindow(QMainWindow):
         self.setMaximumSize(1350, 900)
         self.setStyleSheet(style)
 
-        font = QFont("Helvetica")
-        font.setWeight(12)
-        font.setPixelSize(20)
-        font.setBold(True)
-        self.deviceLabel.setFont(font)
-        self.deviceLabel.setText("Device: " + self.deviceData["device_name"])
-        self.deviceLabel.setStyleSheet("color: white;")
-        self.deviceLabel.setGeometry(46, 34, 230, 30)
+
+
+        self.applicationFrame.hide()
 
 
 def kill_proc_tree(pid, including_parent=True):
