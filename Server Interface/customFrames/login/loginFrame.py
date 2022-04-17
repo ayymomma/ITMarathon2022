@@ -1,6 +1,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFrame, QPushButton, QLineEdit, QLabel
 
+from customFrames.buttons.loginButton import LoginButton
+
 
 class LoginFrame(QFrame):
     def __init__(self, parent):
@@ -8,7 +10,7 @@ class LoginFrame(QFrame):
         self.loginText = QLabel(self)
         self.usernameLineEdit = QLineEdit(self)
         self.passwordLineEdit = QLineEdit(self)
-        self.loginButton = QPushButton(self)
+        self.loginButton = LoginButton(self)
         self.initUI()
 
     def initUI(self):
@@ -27,5 +29,4 @@ class LoginFrame(QFrame):
         # login label
         self.loginText.setGeometry(215, 335, 200, 50)
         self.loginText.setAlignment(Qt.AlignCenter)
-        self.loginText.setText("LOG IN")
 
