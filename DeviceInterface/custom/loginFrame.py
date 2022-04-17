@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFrame, QPushButton, QLineEdit, QLabel
 
@@ -6,6 +6,8 @@ from custom.customButton import CustomButton
 
 
 class LoginFrame(QFrame):
+    login_signal = pyqtSignal(str)
+
     def __init__(self, parent):
         super(LoginFrame, self).__init__(parent)
         self.loginText = QLabel(self)
@@ -40,4 +42,9 @@ class LoginFrame(QFrame):
         self.loginText.setGeometry(215, 320, 200, 60)
         self.loginText.setAlignment(Qt.AlignCenter)
         self.loginText.setStyleSheet("color: white;")
+
+        self.loginButton.clicked.connect(self.loginDevice)
+
+    def loginDevice(self):
+        print("Login device")
 
