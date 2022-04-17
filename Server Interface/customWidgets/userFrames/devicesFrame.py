@@ -36,4 +36,5 @@ class DevicesFrame(QFrame):
         self.deviceTitle.setAlignment(Qt.AlignCenter)
 
     def addDevice(self, device):
+        self.deviceList.append(device)
         self.scrollAreaDevices.addDevice(device)

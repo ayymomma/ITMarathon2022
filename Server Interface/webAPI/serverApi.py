@@ -17,7 +17,6 @@ class ServerAPI:
 
     def login(self, username, password):
         response, code = self.post("/users/login", {"username": username, "password": password})
-        print(response)
         if code == 200:
             self.token = json.loads(response)["token"]
             self.user = json.loads(response)["username"]
@@ -29,13 +28,16 @@ class ServerAPI:
         response = requests.post(self.route + endpoint, headers={'Content-Type': 'application/json'}, data=json.dumps(payload))
         return response.text, response.status_code
 
+    def getAuthorized(self, endpoint):
+        response = requests.get(self.route + endpoint, headers={'Authorization': self.token})
+        return response.text, response.status_code
+
     def postAuthorized(self, endpoint, payload):
         response = requests.post(self.route + endpoint, headers={'Content-Type': 'application/json', 'Authorization': self.token}, data=json.dumps(payload))
         return response.text, response.status_code
 
     def register(self, username, password):
         response, code = self.post("/users/register", {"username": username, "password": password, "repeatPassword": password})
-        print(response, code)
         if code == 200:
             return True
         return False
@@ -46,3 +48,23 @@ class ServerAPI:
         if code == 201:
             return True
         return False
+
+    def getDevices(self):
+        response, code = self.getAuthorized("/users/devices")
+        if code == 201:
+            return json.loads(response)
+        return []
+
+    def addApplication(self, appName, appVersion, appPath):
+        response, code = self.postAuthorized("/applications", {"appName": appName})
+        if code == 200 or code == 201:
+            response, code = self.postAuthorized("/applications/" + appName + "/add_version", {"versionName": appVersion, "appPath": appPath})
+            if code == 200 or code == 201:
+                return True
+        return False
+
+    def getApplications(self):
+        response, code = self.getAuthorized("/applications")
+        if code == 200 or code == 201:
+            return json.loads(response)
+        return []

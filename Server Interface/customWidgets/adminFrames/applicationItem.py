@@ -39,9 +39,6 @@ class ApplicationItem(QFrame):
 
         # combobox
         self.versionComboBox.setGeometry(11, 15, 159, 33)
-        self.versionComboBox.addItem("1.2.0")
-        self.versionComboBox.addItem("1.3.0")
-        self.versionComboBox.addItem("1.4.0")
 
         # vertical line
         self.verticalLine.setGeometry(208, 5, 1, 55)
@@ -64,3 +61,10 @@ class ApplicationItem(QFrame):
         # delete button
         self.deleteButton.setGeometry(973, 16, 119, 32)
         self.deleteButton.setIcon(QIcon('customWidgets/icons/Trash.png'))
+
+    def setName(self, name):
+        self.applicationName.setText(name)
+
+    def setVersion(self, version):
+        for vers in version:
+            self.versionComboBox.addItem(version)

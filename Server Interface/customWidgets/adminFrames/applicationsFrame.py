@@ -6,6 +6,7 @@ from customWidgets.adminFrames.newAppDialog import NewAppDialog
 from customWidgets.buttons.customButton import CustomButton
 from customWidgets.userFrames.applicationItem import ApplicationItem
 from customWidgets.userFrames.scrollAreaApplications import ScrollAreaApplications
+from webAPI.serverApi import ServerAPI
 
 style = """
 QFrame {
@@ -23,6 +24,7 @@ class ApplicationsFrame(QFrame):
         self.scrollAreaApplications = ScrollAreaApplications(self)
         self.addAppButton = CustomButton(self, "", 164, 184, 33)
         self.itemList = []
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -68,4 +70,10 @@ class ApplicationsFrame(QFrame):
 
     def addAppButtonClicked(self):
         self.newAppDialog = NewAppDialog()
+        self.newAppDialog.add_app_signal.connect(self.addNewApp)
         self.newAppDialog.show()
+
+    def addNewApp(self, name, version, path):
+        self.newAppDialog.hide()
+        self.newAppDialog = None
+        self.server.addApplication(name, version, path)
