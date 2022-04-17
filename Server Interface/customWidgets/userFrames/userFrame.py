@@ -70,6 +70,16 @@ class UserFrame(QFrame):
         if self.server.addDevice(id, name):
             self.devicesFrame.addDevice(device)
 
+    def show(self):
+        super(UserFrame, self).show()
+        deviceList = self.server.getDevices()
+        for device in deviceList:
+            print(device)
+            dev = DeviceItem()
+            dev.setName(device['deviceName'])
+            dev.setDeviceId(device['deviceId'])
+            self.devicesFrame.addDevice(dev)
+
 
 
 

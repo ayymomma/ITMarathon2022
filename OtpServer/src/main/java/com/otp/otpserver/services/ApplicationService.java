@@ -20,4 +20,5 @@ public interface ApplicationService {
 
     List<Version> getAllVersionsOfApp(Integer appId);
 
+    List<Version> getNewerVersions(Integer appId, String versionName);
 }

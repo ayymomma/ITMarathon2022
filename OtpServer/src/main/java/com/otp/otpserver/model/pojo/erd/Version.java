@@ -21,8 +21,12 @@ public class Version {
     @Column(name = "TIMESTAMP", nullable = false)
     private Timestamp timestamp;
 
+    @Column(name = "APP_PATH")
+    private String appPath;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "APP_ID", nullable = false)
     private Application app;
+
 
 }

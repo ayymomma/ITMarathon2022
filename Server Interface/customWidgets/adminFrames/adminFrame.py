@@ -21,6 +21,7 @@ class AdminFrame(QFrame):
         super(AdminFrame, self).__init__(parent)
         self.welcomeLabel = QLabel(self)
         self.applicationFrame = ApplicationsFrame(self)
+        self.server = ServerAPI()
         self.initUI()
 
     def initUI(self):
@@ -35,6 +36,13 @@ class AdminFrame(QFrame):
         self.welcomeLabel.setText("Welcome!")
         self.welcomeLabel.setGeometry(90, 25, 300, 30)
 
-        self.applicationFrame.addItem(ApplicationItem())
-        self.applicationFrame.addItem(ApplicationItem())
-        self.applicationFrame.addItem(ApplicationItem())
+
+    def show(self):
+        super(AdminFrame, self).show()
+        apps = self.server.getApplications()
+        print(apps)
+        for app in apps:
+            applicationItem = ApplicationItem()
+            applicationItem.setName(app["appName"])
+            applicationItem.setVersion(app["versions"])
+            self.applicationFrame.addItem(applicationItem)

@@ -37,16 +37,16 @@ public class DeviceServiceImpl implements DeviceService {
         if(existUser == null)
             throw new HttpResponseException("User not found!", HttpStatus.NOT_FOUND);
 
-        Device exists = deviceRepository.findByDeviceNameAndUserUserId(deviceRequest.getDeviceName(), userId);
+        Device exists = deviceRepository.findByDeviceIdAndUserUserId(deviceRequest.getDeviceId(), userId);
 
         if(exists != null)
-            throw new HttpResponseException("A device with this name already exists!", HttpStatus.CONFLICT);
+            throw new HttpResponseException("A device with this id already exists!", HttpStatus.CONFLICT);
 
 
         Device newDevice = new Device();
         newDevice.setDeviceName(deviceRequest.getDeviceName());
         newDevice.setUser(existUser);
-        newDevice.setDeviceId(null);
+        newDevice.setDeviceId(deviceRequest.getDeviceId());
 
         deviceRepository.save(newDevice);
 
@@ -62,7 +62,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public DeviceSession connectDevice(Integer deviceId) {
+    public DeviceSession connectDevice(String deviceId) {
 
         // Check if device exists
         Optional<Device> exists = deviceRepository.findById(deviceId);
@@ -91,7 +91,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public DeviceSession keepAlive(Integer deviceId) {
+    public DeviceSession keepAlive(String deviceId) {
 
         // Check if device exists
         Optional<Device> exists = deviceRepository.findById(deviceId);
@@ -111,5 +111,40 @@ public class DeviceServiceImpl implements DeviceService {
         deviceSession.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         return deviceSessionRepository.save(deviceSession);
+    }
+
+    @Override
+    public Device getDeviceOfId(String deviceId) {
+        Optional<Device> device = deviceRepository.findById(deviceId);
+
+        if(device.isEmpty())
+            throw new HttpResponseException("Device not found!", HttpStatus.NOT_FOUND);
+
+        return device.get();
+    }
+
+    @Override
+    public DeviceSession disconnectDevice(String deviceId) {
+
+        // Check if device exists
+        Optional<Device> exists = deviceRepository.findById(deviceId);
+
+        if(exists.isEmpty())
+            throw new HttpResponseException("Device not found!", HttpStatus.NOT_FOUND);
+
+        Device device = exists.get();
+
+        // Save session into database
+        // Check if session exists
+        DeviceSession deviceSession = deviceSessionRepository.findByDeviceId(deviceId);
+
+        if(deviceSession != null){
+            // Delete old session
+            deviceSessionRepository.delete(deviceSession);
+            return deviceSession;
+        }
+        else
+            throw new HttpResponseException("Device already disconnected!", HttpStatus.NOT_FOUND);
+
     }
 }
