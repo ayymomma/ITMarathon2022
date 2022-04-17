@@ -1,7 +1,8 @@
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QFrame, QLabel, QPushButton
 
+from customWidgets.buttons.customButton import CustomButton
 from customWidgets.userFrames.applicationsFrame import ApplicationsFrame
 from customWidgets.userFrames.devicesFrame import DevicesFrame
 
@@ -21,8 +22,7 @@ class UserFrame(QFrame):
         self.welcomeLabel = QLabel(self)
         self.devicesFrame = DevicesFrame(self)
         self.applicationsFrame = ApplicationsFrame(self)
-        self.addDeviceButton = QPushButton(self)
-
+        self.addDeviceButton = CustomButton(self, "", 218, 238, 43)
         self.initUI()
 
     def initUI(self):
@@ -37,7 +37,7 @@ class UserFrame(QFrame):
         self.welcomeLabel.setText("Welcome, user!")
         self.welcomeLabel.setGeometry(90, 25, 300, 30)
 
-        self.addDeviceButton.setGeometry(14, 832, 218, 53)
+        self.addDeviceButton.setGeometry(116, 825, 218, 43)
         self.addDeviceButton.setText("Add new device")
         self.addDeviceButton.setStyleSheet("background-color: #5AE343;"
                                            "color: black;"
