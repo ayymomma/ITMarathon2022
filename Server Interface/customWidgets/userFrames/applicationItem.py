@@ -65,7 +65,7 @@ class ApplicationItem(QFrame):
         self.updateLabel.setFont(font)
         self.updateLabel.setGeometry(777, 5, 143, 20)
         self.updateLabel.setStyleSheet("color: #E3B528;")
-        self.updateLabel.setText("Update available")
+        self.updateLabel.setText("")
 
         # update button
         self.updateButton.setGeometry(777, 26, 103, 28)
@@ -75,6 +75,9 @@ class ApplicationItem(QFrame):
         app = self.server.getApplicationInfo(name)
         for ap in app:
             for version in ap['versions']:
-                self.versionComboBox.addItem(version['versionName'])
+                if version['versionName'] != "string":
+                    self.versionComboBox.addItem(version['versionName'])
         self.applicationName.setText(name)
         self.versionComboBox.setCurrentIndex(0)
+        if self.versionComboBox.count() > 1:
+            self.updateLabel.setText("Update available")
