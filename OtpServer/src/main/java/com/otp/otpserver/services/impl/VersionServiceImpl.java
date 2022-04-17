@@ -2,7 +2,6 @@ package com.otp.otpserver.services.impl;
 
 import com.otp.otpserver.model.dao.VersionRepository;
 import com.otp.otpserver.model.exception.HttpResponseException;
-import com.otp.otpserver.model.pojo.erd.Application;
 import com.otp.otpserver.model.pojo.erd.Version;
 import com.otp.otpserver.services.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,18 @@ public class VersionServiceImpl implements VersionService {
             throw new HttpResponseException("Version does not exist.", HttpStatus.NOT_FOUND);
 
         return version.get();
+    }
+
+    @Override
+    public Version getVersionOfNameAndAppid(String versionName, Integer appId) {
+        List<Version> version = versionRepository.findAllByAppAppIdAndVersionName(appId, versionName);
+
+        if(version.isEmpty())
+            throw new HttpResponseException("No version with this name for this app", HttpStatus.NOT_FOUND);
+
+        return version.get(0);
+
+
     }
 
     @Override

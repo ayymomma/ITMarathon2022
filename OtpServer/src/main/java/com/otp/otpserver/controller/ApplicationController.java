@@ -3,6 +3,8 @@ package com.otp.otpserver.controller;
 import com.otp.otpserver.model.exception.HttpResponseException;
 import com.otp.otpserver.model.pojo.dto.application.AppVersionRequest;
 import com.otp.otpserver.model.pojo.dto.application.AppVersionResponse;
+import com.otp.otpserver.model.pojo.dto.application.ApplicationMaximal;
+import com.otp.otpserver.model.pojo.dto.version.VersionOnlyName;
 import com.otp.otpserver.model.pojo.dto.version.VersionRequest;
 import com.otp.otpserver.model.pojo.dto.version.VersionResponse;
 import com.otp.otpserver.model.pojo.erd.Application;
@@ -116,7 +118,24 @@ public class ApplicationController {
             if (name == null) applicationList = applicationService.getAllApplications();
             else applicationList = applicationService.getApplicationsByName(name);
 
-            return ok().body(applicationList);
+            List<ApplicationMaximal> resultList = new ArrayList<>();
+            for(Application app : applicationList)
+            {
+                try {
+                    // Get all versions of app
+                    List<Version> allVersions = versionService.getAllVersionsOfApp(app.getAppId());
+                    List<VersionOnlyName> justNames = new ArrayList<>();
+                    for(Version vs : allVersions){
+                        justNames.add(new VersionOnlyName(vs));
+                    }
+
+                    resultList.add(new ApplicationMaximal(app, justNames));
+                }catch (HttpResponseException e){
+                    // Do nothing
+                }
+            }
+
+            return ok().body(resultList);
 
         } catch (HttpResponseException e) {
             return FromHttpResponseError(e);
